@@ -1,0 +1,42 @@
+\documentclass[11pt]{amsart}
+\usepackage{style}
+\usepackage{studia}
+\usepackage{subfiles}
+
+\title{Dead extension elimination for Haskell modules}
+\date{\today}
+\author{Péter Dávid Podlovics}
+\author{Boldizsár Németh}
+\author{Tamás Kozsik}
+
+\keywords{compiler, abstract syntax tree, language extension, haskell}
+
+\begin{document}
+	
+	\subfile{abstract}
+	\maketitle
+
+	\section{Introduction}
+	\subfile{introduction}
+	
+	\section{Related work}
+	\subfile{related_work}
+	
+	\section{The extension elimination problem} \label{ext-elim_problem}
+	\subfile{ext_elim_problem}
+	
+	\section{Properties of the abstract syntax tree}
+	\subfile{haskell_tools}
+	
+	\section{The extension eliminating algorithm} \label{algorithm}
+	\subfile{algorithm}
+	
+	\section{Results}
+	\subfile{results}
+	
+	\section{Conclusions}
+	\subfile{conclusions}
+	
+	\subfile{bibliography}
+	
+\end{document}

@@ -1,0 +1,17 @@
+\documentclass[main.tex]{subfiles}
+\begin{document}
+	\begin{abstract}
+		Haskell is a purely functional programming language with an expressive type system. In addition to the most recent standard \cite{haskell2010-bib}, many compilers, such as GHC~\cite{ghc-bib} and UHC~\cite{uhc-bib} provide extensions~\cite{ghc-users-guide-bib} to the language. The functionality of these extensions can range from mere syntactic modifications to the grammar of Haskell, to introducing completely new semantic features. 
+		
+		Many extensions are compiler specific, hence using them can reduce the portability of the source code. The currently existing tools~\cite{hlint-bib} are only capable of identifying unused syntactic extensions, but they provide no information on those that require semantical analysis.
+		
+		In this paper, we present a method which helps programmers reason about the language extensions in their Haskell modules. With our approach, we can find and eliminate all unnecessary extensions from the modules, moreover, we can discover the exact locations of the language constructs that require a certain extension. The method has been implemented in the Haskell-Tools framework~\cite{haskell-tools-bib}. We also apply our technique to real-life Haskell packages and analyze the results.
+		
+		\vspace{0.5cm}
+		\begin{center}
+			Supported by the ÚNKP-17-1 \\
+			New National Excellence Program of the Ministry of Human Capacities
+		\end{center}
+		
+	\end{abstract}
+\end{document}

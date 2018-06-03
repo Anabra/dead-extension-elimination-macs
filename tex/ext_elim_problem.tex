@@ -1,0 +1,57 @@
+\documentclass[main.tex]{subfiles}
+\begin{document}
+	
+	In this section we will discuss the problem of eliminating unused extensions from Haskell modules. The method presented in the \paper{} will be applied to the extension system of the Glasgow Haskell Compiler. Since our method will be implemented outside of the compiler as an external tool, it will not have access to all information available during the compilation process. As a result we face more complicated challenges than just implementing individual extension checkers. All program code examples presented in the \paper{} are compiled with GHC 8.2.1.
+	
+	\subsection{Extension ambiguity}
+	
+	In some situations, it is not exactly clear which extension(s) a certain language element requires. As an example, type equalities in GHC can be enabled by both \ext{GADTs} and \ext{TypeFamilies}. This makes the extensions needed by the program element ambiguous. When we investigate an ambiguous language element like the one above mentioned above, we must make a choice about which extension(s) to use. However, this choice can drastically impact the final extension set required by the module. See Program~code~\ref{code:ext-ambiguity-parsec}, an excerpt\footnote{The excerpt is from module \pilcode{Distribution.Compat.Graph}} from the parsec library~\cite{parsec}.
+	
+	\begin{codeFloat}
+		\begin{haskell}
+			class Ord (Key a) => IsNode a 
+			  where %\colorbox{lightgreen}{type Key a :: *}%
+			
+			instance (IsNode a, IsNode b, %\colorbox{lightblue}{Key a ~ Key b}%) 
+			          => IsNode (Either a b) where
+			type Key (Either a b) = Key a
+		\end{haskell}
+		\caption{Extension ambiguity in \pilcode{parsec}}
+		\label{code:ext-ambiguity-parsec}
+	\end{codeFloat}
+	
+	As we can see, the program defines a class called \ilcode{IsNode} with an associated type called \ilcode{Key} (highlighted in green). Associated types can be enabled by \ext{TypeFamilies}. The program	also uses a type equality in the constraint of the \ilcode{IsNode} class instance (highlighted in blue). Since either of the two extensions can enable type equalities, arbitrarily, we could turn on \ext{GADTs} here, and the final extension set would contain both \ext{GADTs} and \ext{TypeFamilies}. However, if we chose to use \ext{TypeFamilies} instead (which enables both features), the final extension set would contain only that extension. Our method resolves this problem by introducing \emph{extension formulas} which abstract over the relations between extensions.
+	
+	\subsection{Using overly complex extensions}
+	
+	Among the extensions of GHC, we can define so-called \emph{implication relations}. Essentially this means, if we turn on a certain extension, all implied extensions will be turned on as well. The complete network of implication relations among the extensions supported by GHC can be represented by a group of directed acyclic graphs. A part of this graph can be seen in Figure~\ref{fig:explicit-namespaces-dag}. From the perspective of compiler designers, this hierarchy is really useful if we want to extend the functionalities of already existing language extensions. However, from a user's point of view, these implicit relations can lead to unnecessary extension usage. Take a look at Program code~\ref{code:gadt-syntax}.
+	
+	\begin{codeFloat}[H]
+		\begin{haskell}
+    data Expr a where
+      Add :: Expr a -> Expr a -> Expr a
+      Mul :: Expr a -> Expr a -> Expr a
+		\end{haskell}
+		\caption{\ext{GADTSyntax} example}
+		\label{code:gadt-syntax}
+	\end{codeFloat}
+	
+	\noindent
+	In the example above we declared a custom data type using the \emph{generalized algebraic data type syntax}. This feature can be enabled by turning on the \ext{GADTSyntax} extension. However, if we want to compile this piece of code without turning on the extension, GHC will fail, and show the following error message.
+	
+	% escapes are used to "turn off" the syntax highlighting
+	\begin{oneLineHaskell}
+		%Illegal generalised algebraic data declaration for% "Expr"
+		  %(Use GADTs to allow GADTs)%
+	\end{oneLineHaskell}
+	
+	\noindent
+	GHC suggests turning on the \ext{GADTs} language extension. It is a partially correct answer, since \ext{GADTs} implies \ext{GADTSyntax}, so the code will successfully compile after enabling the former extension. The problem here is that we did not use any functionalities provided by \ext{GADTs}. We could have enabled a much simpler language extension, namely \ext{GADTSyntax} which would have achieved the exact same behavior.
+	
+	\begin{figure}
+		\scalebox{0.88}{\subfile{extension_relations_figures}}
+		\caption{\ext{ExplicitNameSpaces} subgroup}
+		\label{fig:explicit-namespaces-dag}
+	\end{figure}
+	
+\end{document}

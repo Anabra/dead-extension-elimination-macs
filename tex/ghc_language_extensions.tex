@@ -1,0 +1,14 @@
+\documentclass[main.tex]{subfiles}
+\begin{document}
+	
+	% TODO: extensions are module specific, various extensions, coprehensive understanding, purpose of following sections 
+	%TODO: list extensions in each category
+	Different compilers can support different language extensions, throughout the rest of the \paper{}, we will consider those implemented by the Glasgow Haskell Compiler. GHC implements more than one hundred extensions, however, the 30 most commonly used ones cover more than 90\% of all use cases. By defining such a wide range of extensions, some relations naturally form between them.
+	
+	The language extensions supported by GHC have so-called \emph{implication relations} defined over them. Extension \textbf{A} \emph{implies} extension \textbf{B} if and only if turning on \textbf{A} requires turning on \textbf{B}. These implication relations are implicit, which means turning on an extension implicitly turns on all corresponding implied extensions. For instance, if we use \ext{GADTs} in our module, then (besides others extensions) \ext{GADTSyntax} is automatically turned on for us, we do not have to turn it on manually. It is also worth mentioning, that the implication relation is transitive. The complete network of implication relations among the extensions supported by GHC can be represented by a group of directed acyclic graphs. A part of this graph can be seen in Figure~\ref{fig:explicit-namespaces-dag}. In this graph only the immediate implications are illustrated, transitive ones are not.
+	
+	%The implication relations play a crucial role from the perspective of extension elimination. In order to remove a certain extension from a module, we must be able to determine if the extension is necessary. We can achieve this by analyzing the syntax tree of the module, and finding all the language elements requiring the given extension. If we did not find any language elements, we can safely remove the extension.	We define so-called \emph{checkers} for each individual extension, which are responsible for finding the language elements requiring the corresponding extension. If extension \textbf{A} implies extensions \textbf{B} and \textbf{C}, after eliminating \textbf{A}, we must explicitly turn on \textbf{B} and \textbf{C}, because the module might still use the functionalities provided by the latter two. If we want to completely remove \textbf{A}, we must define checkers for the other two extensions as well.
+	
+	\subfile{extension_relations_figures}
+	
+\end{document}

@@ -1,0 +1,39 @@
+\documentclass[main.tex]{subfiles}
+\begin{document}	
+	
+	\begin{tikzpicture}[ node distance = 2cm and 4cm, on grid ]
+	
+	% style
+	\tikzset{styRectDef/.style = {rectangle, rounded corners, draw=black, inner xsep=3mm, inner ysep=3mm}}
+	\tikzcustom{}	
+	
+	
+	\node [styRectGy] (ML)                      {\ext{MonoLocalBinds}};
+	\node [styRectGy] (TO) [above left =of ML]  {\ext{TypeOperators}};
+	\node [styRectGy] (TF) [above =of ML]       {\ext{TypeFamilies}};
+	\node [styRectGy] (TD) [above =of TF]       {\ext{TypeFamilyDependencies}};
+	\node [styRectGy] (KS) [right =of ML]       {\ext{KindSignatures}};
+	\node [styRectGy] (EN) [left  =of ML]       {\ext{ExplicitNameSpaces}};
+	\node [styRectGy] (GA) [below =of ML]       {\ext{GADTs}};
+	\node [styRectGy] (GS) [right =of GA]       {\ext{GADTSyntax}};
+	\node [styRectGy] (PK) [above =of KS]       {\ext{PolyKinds}};
+	\node [styRectGy] (TT) [above =of PK]       {\ext{TypeInType}};
+	\node [styRectGy] (DK) [below right = 2cm and 3cm of TT] {\ext{DataKinds}};
+	
+	\tikzset{every node/.style={fill=white}}
+	\tikzset{every node/.style={fill=white}}
+	\path (TD) edge [styConn] (TF)
+				(TF) edge [styConn] (EN)
+				(TF) edge [styConn] (ML)
+				(GA) edge [styConn] (EN)
+				(GA) edge [styConn] (ML)
+				(GA) edge [styConn] (GS)
+				(TO) edge [styConn] (EN)
+				(TT) edge [styConn] (PK)
+				(TT) edge [styConn] (DK)
+				(PK) edge [styConn] (KS)
+				(TF) edge [styConn] (KS);
+	
+	\end{tikzpicture}
+	
+\end{document}
