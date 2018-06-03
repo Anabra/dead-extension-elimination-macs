@@ -99,7 +99,7 @@
 		}
 	\end{center}
 	
-	As we can see, just like in the other two packages, the only syntactic extension in this library (\ext{LambdaCase}) was used appropriately. It was enabled unnecessarily just a single time. A possible explanation for this can come from the nature of syntactic extensions and programming styles. Every programmer has his/her own coding style, which either includes using syntactic sugar introduced by certain extensions, or not. However, if the programmer does use some kind of syntax sugar, then they will always use it. Moreover, the extensions of GHC introduce syntactic sugar for very commonly used language constructs, such as \pilcode{case} and \pilcode{if} statements, or pattern matching. As a consequence, the language extensions enabling these alternative syntactic constructs less frequently become redundant.
+	Throughout the three packages, syntactic extensions were used rarely, but mostly appropriately. A possible explanation for this can come from the nature of syntactic extensions and programming styles. Every programmer has their own coding style, which either includes using syntactic sugar introduced by certain extensions, or not. However, if the programmer does use some kind of syntax sugar, then they will always use it. Moreover, the extensions of GHC introduce syntactic sugar for very commonly used language constructs, such as \pilcode{case} and \pilcode{if} expressions, or pattern matching. As a consequence, the language extensions enabling these alternative syntactic constructs less frequently become redundant.
 	
 	\subsection{Limitations}
 	
