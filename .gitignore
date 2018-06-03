@@ -8,3 +8,4 @@
 *.out
 *.listing
 _*/
+/others
