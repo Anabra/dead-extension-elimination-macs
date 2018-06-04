@@ -5,7 +5,7 @@
 	
 	\subsection{Extension ambiguity}
 	
-	In some situations, it is not exactly clear which extension(s) a certain language element requires. As an example, type equalities in GHC can be enabled by both \ext{GADTs} and \ext{TypeFamilies}. This makes the extensions needed by the program element ambiguous. When we investigate an ambiguous language element like the one above mentioned above, we must make a choice about which extension(s) to use. However, this choice can drastically impact the final extension set required by the module. See Program~code~\ref{code:ext-ambiguity-parsec}, an excerpt\footnote{The excerpt is from module \pilcode{Distribution.Compat.Graph}} from the parsec library~\cite{parsec}.
+	In some situations, it is not exactly clear which extension(s) a certain language element requires. As an example, type equalities in GHC can be enabled by both \ext{GADTs} and \ext{TypeFamilies}. This makes the extensions needed by the program element ambiguous. When we investigate an ambiguous language element like the one above mentioned above, we must make a choice about which extension(s) to use. However, this choice can drastically impact the final extension set required by the module. See Program~code~\ref{code:ext-ambiguity-parsec}, an excerpt\footnote{The excerpt is from module \pilcode{Distribution.Compat.Graph}.} from the parsec library~\cite{parsec}.
 	
 	\begin{codeFloat}
 		\begin{haskell}

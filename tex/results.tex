@@ -11,7 +11,7 @@
 	
 	In tables (\ref{table:pandoc-results})--(\ref{table:references-results}), we illustrate the results of applying the tool to the packages mentioned above. In these tables only those extensions are shown whose usage statistics were impacted by the refactoring. The check marks indicate, the extension was really required, the crosses indicate the extension was enabled unnecessarily. The extensions not affected by the refactoring are aggregated in to the "other" category. During the extension elimination process, the algorithm gave \underline{no false positive results}, so every single extension the tool removed was unnecessary.
 	
-	\subsubsection{pandoc and http-client}
+	\subsection{pandoc and http-client}
 	
 	The summarized results for \pilcode{pandoc} and \pilcode{http-client} can be seen in Tables~[\ref{table:pandoc-results},\ref{table:http-client-results}].
 	
@@ -64,7 +64,7 @@
 	
 	Another common phenomenon we can observe in both packages is that type system related extension have relatively high redundancy compared to other extensions. For example, in \pilcode{pandoc}, we can see that \ext{TypeSynonymInstances} was enabled in seven different modules, completely unnecessarily in all of them. We can discover a similar pattern for other type system related extensions as well, such as \ext{GADTs}, \ext{FlexibleInstances} and \ext{FlexibleContexts}. Together, these four extensions are responsible for over 60\% of the total redundancy in \pilcode{pandoc}. The type system related extensions are misused in \pilcode{http-client} as well.
 	
-	\subsubsection{references}
+	\subsection{references}
 	
 	Finally, the results for the \pilcode{references} library can be seen in Table~\ref{table:references-results}.
 	

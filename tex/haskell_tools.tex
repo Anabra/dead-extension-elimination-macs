@@ -1,7 +1,7 @@
 \documentclass[main.tex]{subfiles}
 \begin{document}
 	
-	The method presented in this \paper{} performs static code analysis on Haskell modules to determine which extensions are needed in the module, and which ones are not. For this, the algorithm needs an abstract representation of the source code, the abstract syntax tree. The syntax tree used by the algorithm is constructed by the compiler itself and then transformed by Haskell-Tools. The resulting AST contains various types of information calculated throughout the different stages of compilation. 
+	The method presented in this \paper{} performs static code analysis on Haskell modules to determine which extensions are needed in the module, and which ones are not. For this, the algorithm needs an abstract representation of the source code, the abstract syntax tree. The syntax tree used by the algorithm is constructed by the compiler itself and then transformed by Haskell-Tools~\cite{haskell-tools-bib}. The resulting AST is annotated with various types of information calculated throughout the different stages of compilation. We will refer to the annotated abstract syntax tree as AAST.
 	
 	\subsection{Semantic information}
 	
@@ -9,7 +9,7 @@
 	% Ask the question the: does X have meaning? If YES -> semantical, if NO -> semantical
 	% semantic object, semantical ambiguity
 	
-	Despite its name, the syntax tree can contain much more information about the source code than only its syntactic structure. In most cases, eliminating certain extensions requires more than just a syntactic analysis of the source code, we need semantic information as well. The most important piece of semantic information associated with a given AST node is its type. Using type information, we can perform more accurate analysis on the modules.
+	Despite its name, the syntax tree can contain much more information about the source code than only its syntactic structure. In most cases, eliminating certain extensions requires more than just a syntactic analysis of the source code, we need semantic information as well. The most important piece of semantic information associated with a given annotated AST node is its type. Using type information, we can perform more accurate analysis on the modules.
 	
 	Unfortunately, not all nodes have type information associated with them. The reason for this is that the type checker discards intermediate result types after calculating them, thus, the type information of subexpressions is lost after the type checking phase ends. As a consequence, we can only access the type information of syntax tree nodes with qualified names. For instance, in the example below we can only determine the types of the function \ilcode{f}, the operator \ilcode{(:)} and the variables \ilcode{x} and \ilcode{xs}. We have no information about the subexpressions such as \ilcode{f x}.
 	
@@ -21,7 +21,9 @@
 	
 	\subsection{Concrete syntax}
 	
-	In addition to the semantically important abstract syntax, the AST of Haskell-Tools also represents the concrete syntax of the source code. One of the main advantages of this approach, is that all the syntactic sugar present in the source code is also present in the AST. This makes the requirement checking of syntactic extensions particularly simple. Since syntactic extensions mostly only introduce some sort of syntactic sugar to the language, we only need to check the presence of the nodes corresponding to the syntactic sugar in the AST.
+		In addition to the semantically important abstract syntax, the AAST of Haskell-Tools also represents the concrete syntax of the source code. One of the main advantages of this approach, is that all the syntactic sugar present in the source code is also present in the AAST. This makes the requirement checking of syntactic extensions particularly simple. Since syntactic extensions mostly only introduce some sort of syntactic sugar to the language, we only need to check the presence of the nodes corresponding to the syntactic sugar in the AST.
+		
+		It is important to note, that in other languages, such as Scala the desugaring of the source code happens \emph{before} the type checking phase. As a result, the syntactic analysis and the pretty-printing of the syntax tree can pose a difficult challenge~\cite{resugaring-scala}.
 	
 	
 \end{document}
